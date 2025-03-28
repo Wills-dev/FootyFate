@@ -1,11 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-
 import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const [totalPlayers, setTotalPlayers] = useState("");
-  const [numTeams, setNumTeams] = useState("");
+  const [playersPerTeam, setPlayersPerTeam] = useState("");
   const [teams, setTeams] = useState([]);
 
   const shuffleArray = (array) => {
@@ -22,41 +21,59 @@ function App() {
 
   const handleRandomize = () => {
     const players = parseInt(totalPlayers);
-    const teamsCount = parseInt(numTeams);
+    const playersPerTeamCount = parseInt(playersPerTeam);
 
-    if (!players || !teamsCount || players < teamsCount) {
+    if (
+      !players ||
+      !playersPerTeamCount ||
+      playersPerTeamCount <= 0 ||
+      players <= 0
+    ) {
       toast.error(
-        "Please enter valid numbers. Total players must be greater than number of teams."
+        "Please enter valid numbers. Both total players and players per team must be greater than 0."
       );
+      return;
+    }
 
+    if (playersPerTeamCount > players) {
+      toast.error(
+        "Players per team cannot be greater than the total number of players."
+      );
       return;
     }
 
     const playerNumbers = Array.from({ length: players }, (_, i) => i + 1);
     const shuffledPlayers = shuffleArray([...playerNumbers]);
 
-    const playersPerTeam = Math.floor(players / teamsCount);
-    const extraPlayers = players % teamsCount;
+    const fullTeamsCount = Math.floor(players / playersPerTeamCount);
+    const remainingPlayers = players % playersPerTeamCount;
 
     const newTeams = [];
     let playerIndex = 0;
 
-    for (let i = 0; i < teamsCount; i++) {
-      const teamSize = playersPerTeam + (i < extraPlayers ? 1 : 0);
-      const team = shuffledPlayers.slice(playerIndex, playerIndex + teamSize);
+    for (let i = 0; i < fullTeamsCount; i++) {
+      const team = shuffledPlayers.slice(
+        playerIndex,
+        playerIndex + playersPerTeamCount
+      );
       newTeams.push(team);
-      playerIndex += teamSize;
+      playerIndex += playersPerTeamCount;
+    }
+
+    if (remainingPlayers > 0) {
+      const remainingTeam = shuffledPlayers.slice(playerIndex);
+      newTeams.push(remainingTeam);
     }
 
     setTeams(newTeams);
     // Reset inputs
     setTotalPlayers("");
-    setNumTeams("");
+    setPlayersPerTeam("");
   };
 
   const handleReset = () => {
     setTotalPlayers("");
-    setNumTeams("");
+    setPlayersPerTeam("");
     setTeams([]);
   };
 
@@ -92,20 +109,20 @@ function App() {
                       value={totalPlayers}
                       onChange={(e) => setTotalPlayers(e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-200 focus:ring-opacity-50 px-2 h-10 outline-none bg-purple-100"
-                      placeholder="Enter total players (e.g., 30) "
+                      placeholder="Enter total players (e.g., 20)"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Number of Teams
+                      Players Per Team
                     </label>
                     <input
                       type="number"
-                      value={numTeams}
-                      onChange={(e) => setNumTeams(e.target.value)}
+                      value={playersPerTeam}
+                      onChange={(e) => setPlayersPerTeam(e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-200 focus:ring-opacity-50 px-2 h-10 outline-none bg-purple-100"
-                      placeholder="Enter number of teams (e.g., 5)"
+                      placeholder="Enter players per team (e.g., 6)"
                     />
                   </div>
 

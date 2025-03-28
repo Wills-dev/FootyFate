@@ -68,7 +68,7 @@ function App() {
           <div className="sm:py-8 py-4 flex flex-col min-h-screen h-full gap-10 xl:px-24 lg:px-16 sm:px-10 px-4 w-full">
             <div>
               <img
-                src="/src/assets/FootyFate_Transparent (1).png"
+                src="/FootyFate_Transparent (1).png"
                 alt="FootyFate logo"
                 className="object-contain sm:w-20 w-14 h-auto"
               />

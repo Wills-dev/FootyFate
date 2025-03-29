@@ -151,7 +151,7 @@ function App() {
                           <h3 className="font-medium text-purple-950">
                             {getTeamName(index)} ({team.length} players):
                           </h3>
-                          <div className="flex flex-wrap space-x-2 mt-2">
+                          <div className="flex flex-wrap gap-2 mt-2">
                             {team.map((player) => (
                               <div
                                 key={player}

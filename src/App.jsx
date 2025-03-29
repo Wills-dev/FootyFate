@@ -96,7 +96,7 @@ function App() {
                   Welcome to FootyFate
                 </h1>
                 <p className="text-sm text-center text-gray-500 mb-4">
-                  Determine your fate in today's match
+                  Determine each team's fate in today's match
                 </p>
 
                 <div className="space-y-4">

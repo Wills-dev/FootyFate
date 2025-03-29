@@ -168,6 +168,16 @@ function App() {
                 )}
               </div>
             </div>
+            <div className="2xl:container 2xl:mx-auto xl:px-24 lg:px-16 sm:px-10 px-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-200 capitalize">
+                  copyright © 2025 FootyFate. all rights reserved
+                </p>
+                <p className="text-sm font-semibold text-purple-300 name">
+                  WillsCode
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
